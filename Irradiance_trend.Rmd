@@ -1,0 +1,44 @@
+---
+title: "Irradiance Trend in Tokyo"
+author: "Norihito Nakata"
+date: "10/29/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+## Irradiance Data
+
+Irradiance data in Tokyo is downloaded from [Japn Meteorological Agency]( "https://www.data.jma.go.jp/gmd/risk/obsdl/index.php").
+The data is from 2012.1.1 to 2018.1.1.
+
+```{r}
+data <- read.csv("data.csv")
+data$Date <- as.Date(data$Date)
+names(data) <- c("Date", "Irradiance")
+```
+
+```{r echo=TRUE}
+head(data)
+```
+
+
+
+
+## Trend 2012 - 2018
+
+```{r plotlib, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(plotly)
+```
+
+```{r plot}
+p <- ggplot(data=data, aes(x=Date, y=Irradiance))
+p <- p + geom_point(shape=1)
+
+(p <- ggplotly(p))
+
+```
+
